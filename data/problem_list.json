@@ -1,0 +1,82 @@
+[
+    {
+        "difficulty": "Level 1",
+        "name": "완주하지 못한 선수"
+    },
+    {
+        "difficulty": "Level 1",
+        "name": "크레인 인형뽑기 게임"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "소수 찾기"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "가장 큰 수"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "전화번호 목록"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "프린터"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "오픈채팅방"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "기능개발"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "카펫"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "다리를 지나는 트럭"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "더 맵게"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "숫자의 표현"
+    },
+    {
+        "difficulty": "Level 2",
+        "name": "타겟 넘버"
+    },
+    {
+        "difficulty": "Level 3",
+        "name": "가장 긴 팰린드롬"
+    },
+    {
+        "difficulty": "Level 3",
+        "name": "순위"
+    },
+    {
+        "difficulty": "Level 3",
+        "name": "불량 사용자"
+    },
+    {
+        "difficulty": "Level 3",
+        "name": "네트워크"
+    },
+    {
+        "difficulty": "Level 3",
+        "name": "단어 변환"
+    },
+    {
+        "difficulty": "Level 3",
+        "name": "여행경로"
+    },
+    {
+        "difficulty": "Level 3",
+        "name": "가장 먼 노드"
+    }
+]

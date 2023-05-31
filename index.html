@@ -5,19 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>chat</title>
-    <!-- js -->
-    <script src="./index.js" defer type="module"></script>
-
-    <!-- axios -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
   </head>
   <body>
-    <div>
+    <div class="container mx-auto">
+      <select id="problem-select" onchange="handleSelectChange()">
+        <option value="">Select a problem</option>
+    </select>
       <ul></ul>
       <form action="post">
-        <input type="text" autofocus />
-        <button type="submit">전송</button>
+        <div class="input-container">
+          <textarea id="area" class="border border-gray-300 rounded-lg py-2 px-4 w-3/4"></textarea>
+          <button type="submit">전송</button>
+        </div>
       </form>
     </div>
   </body>
+  <!-- js -->
+  <script src="./js/index.js" defer type="module"></script>
+  <!-- axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./js/problem_selectBox.js"></script>
+  <script src="./js/design.js"></script>
 </html>
