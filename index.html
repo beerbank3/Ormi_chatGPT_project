@@ -4,22 +4,34 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>chat</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>chatGPT-Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./css/index.css">
   </head>
   <body>
-    <div class="container mx-auto">
-      <select id="problem-select" onchange="handleSelectChange()">
-        <option value="">Select a problem</option>
-    </select>
-      <ul></ul>
-      <form action="post">
-        <div class="input-container">
-          <textarea id="area" class="border border-gray-300 rounded-lg py-2 px-4 w-3/4"></textarea>
-          <button type="submit">전송</button>
+    <header class="items-center bg-cyan-200">
+      <div class="logo mx-40">
+        <h1 class="text-4xl font-bold">chatGPT-Project</h1>
+      </div>
+    </header>
+    <div class="p-8" style="display: flex;">
+      <div class="flex flex-col w-1/2 border-gray-300 border h-96 my-4 mx-4">
+        <select id="problem-select">
+          <option value="">Select a problem</option>
+        </select>
+        <div id="problem" class="h-full">
+
         </div>
-      </form>
+      </div>
+      <div class="relative w-1/2 border-gray-300 border h-96 mx-4 my-4">
+        <ul></ul>
+        <form action="post" class="absolute inset-x-0 bottom-0">
+            <div style="display: flex;">
+              <textarea id="area" class="border border-gray-300 rounded-lg py-2 px-4 w-full" style="margin-top: 10px;"></textarea>
+              <button type="submit" class="rounded-lg bg-cyan-500" style="flex-basis: auto; margin-top: 10px;">전송</button>
+            </div>
+        </form>
+      </div>
     </div>
   </body>
   <!-- js -->

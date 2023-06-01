@@ -1,24 +1,13 @@
-.body{
-    width: 1920px;
-    height: 1700px;
+.header{
+    height: 80px;
+    background: #9ae8fc;
+}
 
+.body{
+    padding: 20px;
     background: #FFFFFF;
 }
-.container{
-    position: relative;
-    height: 500px;
-    background: #d7ffe3;
-}
-.input-container{
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-}
+
 li.question{
     background: #ffffff;
 }

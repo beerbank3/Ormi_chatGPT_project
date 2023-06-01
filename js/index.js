@@ -1,6 +1,7 @@
 const $form = document.querySelector("form");
 const $textarea = document.querySelector("textarea");
 const $chatList = document.querySelector("ul");
+const $problemBoard = document.getElementById("problem");
 
 // openAI API
 let url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`;
@@ -15,6 +16,7 @@ let data = [
     content: "assistant는 프로그래머스 Python 코딩테스트 전문가이다.",
   },
 ];
+
 // 화면에 뿌려줄 데이터, 질문들
 let questionData = [];
 
@@ -75,37 +77,48 @@ const printAnswer = async (answer) => {
     });
   }
 };
-function LoadingWithMask() {
-  var container = document.querySelector('.container');
 
-  // 화면의 높이와 너비를 구합니다.
-  var maskHeight = Math.max(
-    document.documentElement.clientHeight,
-    window.innerHeight || 0
-  );
+// 화면에 문제에 대한 설명 그려주는 함수
+const printProblem = async (problem) => {
+  let p = document.createElement("p");
+  p.innerText = problem;
+  $problemBoard.appendChild(p);
+};
 
-  // 마스크를 설정합니다.
+function LoadingWithMask(select) {
+  let container;
+  if (select === "answer") {
+    container = document.querySelector('ul');
+  } else if (select === "problem") {
+    container = $problemBoard;
+  }
 
-  var loadingImg = document.createElement('div');
-  loadingImg.id = 'loadingImg';
-  loadingImg.innerHTML = "<img src='./image/LoadingImg.gif' style='position: relative; display: block; margin: 0px auto;'/>";
+  if (container) {
+    var loadingImg = document.createElement('li');
+    // 마스크를 설정합니다.
+    loadingImg.id = 'loadingImg';
+    loadingImg.innerHTML = "<img src='./image/LoadingImg.gif' style='position: relative; display: block; margin: 0px auto; '/>";
 
-  // .container 요소에 마스크와 로딩 이미지 추가
-  container.appendChild(loadingImg);
+    // .container 요소에 마스크와 로딩 이미지 추가
+    container.appendChild(loadingImg);
 
-  // 로딩중 이미지 표시
-  loadingImg.style.display = 'block';
+    // 로딩중 이미지 표시
+    loadingImg.style.display = 'block';
+  }
 }
 
-function closeLoadingWithMask() {
-  var loadingImg = document.getElementById('loadingImg');
+function closeLoadingWithMask(select) {
+  let container;
+  if (select === "answer") {
+    container = document.querySelector('ul');
+  } else if (select === "problem") {
+    container = $problemBoard;
+  }
 
+  var loadingImg = container.querySelector('#loadingImg');
   if (loadingImg) {
     loadingImg.style.display = 'none';
-
-    // .container 요소에서 마스크와 로딩 이미지 제거
-    var container = document.querySelector('.container');
-    if (container) {
+    if(container){
       container.removeChild(loadingImg);
     }
   }
@@ -113,7 +126,6 @@ function closeLoadingWithMask() {
 
 // api 요청보내는 함수
 const apiPost = async () => {
-  LoadingWithMask()
   const result = await axios({
     method: "post",
     maxBodyLength: Infinity,
@@ -129,7 +141,26 @@ const apiPost = async () => {
   } catch (err) {
     console.log(err);
   }
-  closeLoadingWithMask()
+  closeLoadingWithMask("answer")
+};
+
+const problemApiPost = async (problemData) => {
+  const result = await axios({
+    method: "post",
+    maxBodyLength: Infinity,
+    url: url,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(problemData),
+  });
+  try {
+    console.log(result.data);
+    printProblem(result.data.choices[0].message.content);
+  } catch (err) {
+    console.log(err);
+  }
+  closeLoadingWithMask("problem")
 };
 
 // submit
@@ -139,4 +170,26 @@ $form.addEventListener("submit", (e) => {
   sendQuestion(question);
   apiPost();
   printQuestion();
+  LoadingWithMask("answer")
 });
+
+const selectElement = document.getElementById('problem-select');
+
+selectElement.addEventListener('change', handleSelectChange);
+
+function handleSelectChange(event) {
+  const selectedValue = event.target.value;
+  let problemData = [
+    {
+      role: "system",
+      content: "assistant는 프로그래머스 Python 코딩테스트 전문가이다.",
+    },
+    {
+      role: "user",
+      content: selectedValue+"문제에 대해 설명하고 어떤방식으로 풀면 좋은지 알려줘 단 풀이과정이나 풀이코드는 알려주지마",
+    },
+  ];
+  problemApiPost(problemData);
+  console.log(selectedValue);
+  LoadingWithMask("problem")
+}

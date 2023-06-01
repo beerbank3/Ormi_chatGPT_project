@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // JSON 파일 읽기
-    axios.get("/data/problem_list.json")
+    axios.get("./data/problem_list.json")
         .then(response => {
             const data = response.data;
             // select 박스에 옵션 추가
