@@ -83,6 +83,13 @@ const printProblem = async (problem) => {
   let p = document.createElement("p");
   p.innerText = problem;
   $problemBoard.appendChild(p);
+  if (problem) {
+    data.push({
+      role: "assistant",
+      content: problem,
+    });
+  }
+  console.log(data)
 };
 
 function LoadingWithMask(select) {
@@ -156,6 +163,7 @@ const problemApiPost = async (problemData) => {
   });
   try {
     console.log(result.data);
+    data.push(problemData.find(item => item.role === 'user'));
     printProblem(result.data.choices[0].message.content);
   } catch (err) {
     console.log(err);
@@ -186,10 +194,10 @@ function handleSelectChange(event) {
     },
     {
       role: "user",
-      content: selectedValue+"문제에 대해 설명하고 어떤방식으로 풀면 좋은지 알려줘 단 풀이과정이나 풀이코드는 알려주지마",
+      content: selectedValue+"문제에 대해 설명하고 이 문제를 어떻게 해결하면 되고 그리고 어떤방식으로 풀면 가장 좋은지 알려줘 단 풀이과정이나 풀이코드는 알려주지마",
     },
   ];
   problemApiPost(problemData);
-  console.log(selectedValue);
+  console.log(problemData);
   LoadingWithMask("problem")
 }
