@@ -91,12 +91,15 @@ const printProblem = async (problem) => {
   }
   console.log(data)
 };
-
-function LoadingWithMask(select) {
+/**
+ * mask이미지를 생성합니다.
+ * 문제쪽 이미지와 질의응답쪽 이미지를 따로 분류해서 생성합니다.
+ */
+function LoadingWithMask(operationType) {
   let container;
-  if (select === "answer") {
+  if (operationType === "question") {
     container = document.querySelector('ul');
-  } else if (select === "problem") {
+  } else if (operationType === "problem") {
     container = $problemBoard;
   }
 
@@ -113,12 +116,15 @@ function LoadingWithMask(select) {
     loadingImg.style.display = 'block';
   }
 }
-
-function closeLoadingWithMask(select) {
+/**
+ * mask된 이미지를 없애는 함수입니다.
+ * 문제쪽 이미지와 질의응답쪽 이미지를 따로 분류해서 없앱니다
+ */
+function closeLoadingWithMask(operationType) {
   let container;
-  if (select === "answer") {
+  if (operationType === "question") {
     container = document.querySelector('ul');
-  } else if (select === "problem") {
+  } else if (operationType === "problem") {
     container = $problemBoard;
   }
 
@@ -132,7 +138,13 @@ function closeLoadingWithMask(select) {
 }
 
 // api 요청보내는 함수
-const apiPost = async () => {
+/**
+ * 문제에 대한 API post를 보냅니다.
+ * 해당 코드에서 operationType은
+ * 문제 선택 = problem
+ * 질의 응답 =  question로 들어가면서 if문에서 분류가 됩니다.
+ */
+const apiPost = async (operationType) => {
   const result = await axios({
     method: "post",
     maxBodyLength: Infinity,
@@ -143,32 +155,19 @@ const apiPost = async () => {
     data: JSON.stringify(data),
   });
   try {
-    console.log(result.data);
-    printAnswer(result.data.choices[0].message.content);
+    if(operationType==="question"){
+      printAnswer(result.data.choices[0].message.content);
+    }else if(operationType==="problem"){
+      printProblem(result.data.choices[0].message.content);
+    }
   } catch (err) {
     console.log(err);
   }
-  closeLoadingWithMask("answer")
-};
-
-const problemApiPost = async (problemData) => {
-  const result = await axios({
-    method: "post",
-    maxBodyLength: Infinity,
-    url: url,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: JSON.stringify(problemData),
-  });
-  try {
-    console.log(result.data);
-    data.push(problemData.find(item => item.role === 'user'));
-    printProblem(result.data.choices[0].message.content);
-  } catch (err) {
-    console.log(err);
+  if(operationType==="question"){
+    closeLoadingWithMask("question")
+  }else if(operationType==="problem"){
+    closeLoadingWithMask("problem")
   }
-  closeLoadingWithMask("problem")
 };
 
 // submit
@@ -176,28 +175,25 @@ $form.addEventListener("submit", (e) => {
   e.preventDefault();
   $textarea.value = null;
   sendQuestion(question);
-  apiPost();
+  apiPost("question");
   printQuestion();
-  LoadingWithMask("answer")
+  LoadingWithMask("question")
 });
 
 const selectElement = document.getElementById('problem-select');
 
 selectElement.addEventListener('change', handleSelectChange);
 
+/**
+ * 셀렉트 박스에 선택된 문제에 대한 설명한다.
+ * selectedValue ex)완주하지 못한 선수
+ */
 function handleSelectChange(event) {
   const selectedValue = event.target.value;
-  let problemData = [
-    {
-      role: "system",
-      content: "assistant는 프로그래머스 Python 코딩테스트 전문가이다.",
-    },
-    {
+  data.push({
       role: "user",
-      content: selectedValue+"문제에 대해 설명하고 이 문제를 어떻게 해결하면 되고 그리고 어떤방식으로 풀면 가장 좋은지 알려줘 단 풀이과정이나 풀이코드는 알려주지마",
-    },
-  ];
-  problemApiPost(problemData);
-  console.log(problemData);
+      content: selectedValue+"문제에 대해 설명하고 이 문제를 어떻게 해결하면 되고 그리고 어떤방식으로 풀면 가장 좋은지 알려주고 자료형과 자료형 선언방식, 라이브러리를 사용했다면 그 라이브러리에대한 설명과 라이브러리의 예시도 알려줘",
+  });
+  apiPost("problem");
   LoadingWithMask("problem")
 }
