@@ -30,7 +30,7 @@
         <div class="h-1/6">
           <form action="post" class="absolute inset-x-0 bottom-0">
               <div class="flex">
-                <textarea id="area" class="border border-gray-300 rounded-lg py-2 px-4 w-full" style="margin-top: 10px;"></textarea>
+                <textarea id="area" class="border border-gray-300 rounded-lg py-2 px-4 w-full" style="margin-top: 10px;" placeholder="ChatGPT에 문제에 대해 궁금한 점을 질문하세요"></textarea>
                 <button type="submit" class="rounded-lg bg-cyan-500" style="flex-basis: auto; margin-top: 10px;">전송</button>
               </div>
           </form>
@@ -39,7 +39,8 @@
     </div>
   </body>
   <!-- js -->
-  <script src="./js/index.js" defer type="module"></script>
+  <script src="./js/api.js" defer type="module"></script>
+  <script src="./js/chat.js" type="module"></script>
   <!-- axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="./js/problem_selectBox.js"></script>

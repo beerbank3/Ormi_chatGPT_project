@@ -1,16 +1,15 @@
+import apiPost from '../js/api.js';
+
 const $form = document.querySelector("form");
 const $textarea = document.querySelector("textarea");
 const $chatList = document.querySelector("ul");
 const $problemBoard = document.getElementById("problem");
-
-// openAI API
-let url = `https://estsoft-openai-api.jejucodingcamp.workers.dev/`;
-
+const $selectElement = document.getElementById('problem-select');
 // 사용자의 질문
 let question;
 
 // 질문과 답변 저장
-let data = [
+export let data = [
   {
     role: "system",
     content: "assistant는 프로그래머스 Python 코딩테스트 전문가이다.",
@@ -20,7 +19,7 @@ let data = [
 // 화면에 뿌려줄 데이터, 질문들
 let questionData = [];
 
-textarea.addEventListener("keydown", (e) => {
+$textarea.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && e.shiftKey) {
     e.preventDefault();
     textarea.value += "\n";
@@ -51,7 +50,7 @@ const sendQuestion = (question) => {
 };
 
 // 화면에 질문 그려주는 함수
-const printQuestion = async () => {
+export function printQuestion() {
   if (question) {
     let li = document.createElement("li");
     li.classList.add("question");
@@ -65,7 +64,7 @@ const printQuestion = async () => {
 };
 
 // 화면에 답변 그려주는 함수
-const printAnswer = async (answer) => {
+export function printAnswer(answer) {
   let li = document.createElement("li");
   li.classList.add("answer");
   li.innerText = answer;
@@ -79,7 +78,7 @@ const printAnswer = async (answer) => {
 };
 
 // 화면에 문제에 대한 설명 그려주는 함수
-const printProblem = async (problem) => {
+export function printProblem(problem) {
   let p = document.createElement("p");
   p.innerText = problem;
   $problemBoard.appendChild(p);
@@ -104,7 +103,7 @@ function LoadingWithMask(operationType) {
   }
 
   if (container) {
-    var loadingImg = document.createElement('li');
+    const loadingImg = document.createElement('li');
     // 마스크를 설정합니다.
     loadingImg.id = 'loadingImg';
     loadingImg.innerHTML = "<img src='./image/LoadingImg.gif' style='position: relative; display: block; margin: 0px auto; '/>";
@@ -120,7 +119,7 @@ function LoadingWithMask(operationType) {
  * mask된 이미지를 없애는 함수입니다.
  * 문제쪽 이미지와 질의응답쪽 이미지를 따로 분류해서 없앱니다
  */
-function closeLoadingWithMask(operationType) {
+export function closeLoadingWithMask(operationType) {
   let container;
   if (operationType === "question") {
     container = document.querySelector('ul');
@@ -128,7 +127,7 @@ function closeLoadingWithMask(operationType) {
     container = $problemBoard;
   }
 
-  var loadingImg = container.querySelector('#loadingImg');
+  const loadingImg = container.querySelector('#loadingImg');
   if (loadingImg) {
     loadingImg.style.display = 'none';
     if(container){
@@ -137,52 +136,21 @@ function closeLoadingWithMask(operationType) {
   }
 }
 
-// api 요청보내는 함수
-/**
- * 문제에 대한 API post를 보냅니다.
- * 해당 코드에서 operationType은
- * 문제 선택 = problem
- * 질의 응답 =  question로 들어가면서 if문에서 분류가 됩니다.
- */
-const apiPost = async (operationType) => {
-  const result = await axios({
-    method: "post",
-    maxBodyLength: Infinity,
-    url: url,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: JSON.stringify(data),
-  });
-  try {
-    if(operationType==="question"){
-      printAnswer(result.data.choices[0].message.content);
-    }else if(operationType==="problem"){
-      printProblem(result.data.choices[0].message.content);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-  if(operationType==="question"){
-    closeLoadingWithMask("question")
-  }else if(operationType==="problem"){
-    closeLoadingWithMask("problem")
-  }
-};
-
 // submit
 $form.addEventListener("submit", (e) => {
   e.preventDefault();
   $textarea.value = null;
+  if (!question) {
+    alert("값이 없습니다!");
+    return;
+  }
   sendQuestion(question);
   apiPost("question");
   printQuestion();
   LoadingWithMask("question")
 });
 
-const selectElement = document.getElementById('problem-select');
-
-selectElement.addEventListener('change', handleSelectChange);
+$selectElement.addEventListener('change', handleSelectChange);
 
 /**
  * 셀렉트 박스에 선택된 문제에 대한 설명한다.
@@ -194,6 +162,6 @@ function handleSelectChange(event) {
       role: "user",
       content: selectedValue+"문제에 대해 설명하고 이 문제를 어떻게 해결하면 되고 그리고 어떤방식으로 풀면 가장 좋은지 알려주고 자료형과 자료형 선언방식, 라이브러리를 사용했다면 그 라이브러리에대한 설명과 라이브러리의 예시도 알려줘",
   });
-  apiPost("problem");
   LoadingWithMask("problem")
+  apiPost("problem");
 }
