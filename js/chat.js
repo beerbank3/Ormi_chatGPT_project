@@ -1,6 +1,7 @@
 import apiPost from '../js/api.js';
 
 const $form = document.querySelector("form");
+const $scrollContainer = document.querySelector('.scroll-container');
 const $textarea = document.querySelector("textarea");
 const $chatList = document.querySelector("ul");
 const $problemBoard = document.getElementById("problem");
@@ -88,7 +89,6 @@ export function printProblem(problem) {
       content: problem,
     });
   }
-  console.log(data)
 };
 /**
  * mask이미지를 생성합니다.
@@ -148,6 +148,8 @@ $form.addEventListener("submit", (e) => {
   apiPost("question");
   printQuestion();
   LoadingWithMask("question")
+  $textarea.style.height = 'auto';
+  $scrollContainer.scrollTop = $scrollContainer.scrollHeight;
 });
 
 $selectElement.addEventListener('change', handleSelectChange);
@@ -157,6 +159,7 @@ $selectElement.addEventListener('change', handleSelectChange);
  * selectedValue ex)완주하지 못한 선수
  */
 function handleSelectChange(event) {
+  $problemBoard.innerHTML = "";
   const selectedValue = event.target.value;
   data.push({
       role: "user",
