@@ -20,8 +20,14 @@
 > 오른쪽은 그 문제에 대한 질의응답 칸입니다.
 
 <img src="readme/masking.png" width="45%">
+
 > 문제 선택시 로딩중인걸 알려주는 gif입니다.
 
 <img src="readme/problem.png" width="45%">
+
 > 문제 선택시 문제에 대한 설명과 해결방안을 알려줍니다.
+
+<img src="readme/answer.png" width="45%">
+
+> 문제에 대한 질의응답을 하면 답변이 나옵니다.
 
