@@ -68,7 +68,7 @@ export function printQuestion() {
 export function printAnswer(answer) {
   let li = document.createElement("li");
   li.classList.add("answer");
-  li.innerText = answer;
+  li.innerHTML = convertMarkdown(answer);
   $chatList.appendChild(li);
   if (answer) {
     data.push({
@@ -81,7 +81,7 @@ export function printAnswer(answer) {
 // 화면에 문제에 대한 설명 그려주는 함수
 export function printProblem(problem) {
   let p = document.createElement("p");
-  p.innerText = problem;
+  p.innerHTML = convertMarkdown(problem);
   $problemBoard.appendChild(p);
   if (problem) {
     data.push({
@@ -90,6 +90,19 @@ export function printProblem(problem) {
     });
   }
 };
+
+function convertMarkdown(content) {
+  console.log(content)
+  let matches = content.match(/```python([\s\S]*?)```/g);
+  if (matches) {
+    for (let i = 0; i < matches.length; i++) {
+      let match = marked.parse(matches[i]);
+      content = content.replace(/```python([\s\S]*?)```/g, match);
+    }
+  }
+  content = content.replace(/\n/g, "<br>");
+  return content;
+}
 /**
  * mask이미지를 생성합니다.
  * 문제쪽 이미지와 질의응답쪽 이미지를 따로 분류해서 생성합니다.
