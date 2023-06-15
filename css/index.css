@@ -1,7 +1,7 @@
-li.question{
+li.question {
     background: #ffffff;
 }
-.answer{
+.answer {
     background: #d3d3d3;
 }
 
@@ -9,4 +9,4 @@ li.question{
     resize: vertical; /* 수직 크기 조정만 허용 */
     min-height: 100px; /* 초기 높이 설정 */
     max-height: 200px; /* 최대 높이 설정 */
-  }
+}
