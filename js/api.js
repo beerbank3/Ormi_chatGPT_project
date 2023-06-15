@@ -20,17 +20,17 @@ const apiPost = async (operationType) => {
     data: JSON.stringify(data),
   });
   try {
-    if(operationType==="question"){
+    if(operationType === "question"){
       printAnswer(result.data.choices[0].message.content);
-    }else if(operationType==="problem"){
+    }else if(operationType === "problem"){
       printProblem(result.data.choices[0].message.content);
     }
   } catch (err) {
     console.log(err);
   }
-  if(operationType==="question"){
+  if(operationType === "question"){
     closeLoadingWithMask("question")
-  }else if(operationType==="problem"){
+  }else if(operationType === "problem"){
     closeLoadingWithMask("problem")
   }
 };
