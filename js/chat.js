@@ -114,18 +114,17 @@ function LoadingWithMask(operationType) {
     container = $problemBoard;
   }
 
-  if (container) {
-    const loadingImg = document.createElement('li');
-    // 마스크를 설정합니다.
-    loadingImg.id = 'loadingImg';
-    loadingImg.innerHTML = "<img src='./image/LoadingImg.gif' style='position: relative; display: block; margin: 0px auto; '/>";
+  const loadingImg = document.createElement('li');
+  // 마스크를 설정합니다.
+  loadingImg.id = 'loadingImg';
+  loadingImg.innerHTML = "<img src='./image/LoadingImg.gif' style='position: relative; display: block; margin: 0px auto; '/>";
 
-    // .container 요소에 마스크와 로딩 이미지 추가
-    container.appendChild(loadingImg);
+  // .container 요소에 마스크와 로딩 이미지 추가
+  container.appendChild(loadingImg);
 
-    // 로딩중 이미지 표시
-    loadingImg.style.display = 'block';
-  }
+  // 로딩중 이미지 표시
+  loadingImg.style.display = 'block';
+  
 }
 /**
  * mask된 이미지를 없애는 함수입니다.
@@ -142,9 +141,7 @@ export function closeLoadingWithMask(operationType) {
   const loadingImg = container.querySelector('#loadingImg');
   if (loadingImg) {
     loadingImg.style.display = 'none';
-    if(container){
-      container.removeChild(loadingImg);
-    }
+    container.removeChild(loadingImg);
   }
 }
 
