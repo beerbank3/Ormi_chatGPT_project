@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>chatGPT-Project</title>
+    <!-- CSS 라이브러리 -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- CSS -->
     <link rel="stylesheet" href="./css/index.css">
   </head>
   <body class="overflow-hidden bg-gray-200">
@@ -14,7 +16,7 @@
         <h1 class="text-4xl font-bold">CodingTest practice - chatGPT</h1>
       </div>
     </header>
-    <div class="h-screen p-8 pb-24" style="display: flex;">
+    <div class="h-screen flex p-8 pb-24">
       <div class="flex flex-col overflow-auto w-1/2 border-gray-300 border h-full my-4 mx-4 bg-white">
         <select id="problem-select">
           <option value="">Select a problem</option>
@@ -30,19 +32,19 @@
         <div class="h-1/6">
           <form action="post" class="absolute inset-x-0 bottom-0">
               <div class="flex">
-                <textarea id="area" class="border border-gray-300 rounded-lg py-2 px-4 w-full" style="margin-top: 10px;" placeholder="ChatGPT에 문제에 대해 궁금한 점을 질문하세요"></textarea>
-                <button type="submit" class="rounded-lg bg-cyan-500" style="flex-basis: auto; margin-top: 10px;">전송</button>
+                <textarea id="area" class="border border-gray-300 rounded-lg py-2 px-4 w-full" placeholder="ChatGPT에 문제에 대해 궁금한 점을 질문하세요"></textarea>
+                <button type="submit" class="flex-basis rounded-lg bg-cyan-500">전송</button>
               </div>
           </form>
         </div>
       </div>
     </div>
   </body>
-  <!-- js -->
+  <!-- JS 라이브러리 -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- JS-->
   <script src="./js/api.js" defer type="module"></script>
   <script src="./js/chat.js" type="module"></script>
-  <!-- axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="./js/problem_selectBox.js"></script>
   <script src="./js/design.js"></script>
