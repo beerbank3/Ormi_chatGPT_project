@@ -92,7 +92,6 @@ export function printProblem(problem) {
 };
 
 function convertMarkdown(content) {
-  console.log(content)
   let matches = content.match(/```python([\s\S]*?)```/g);
   if (matches) {
     for (let i = 0; i < matches.length; i++) {
